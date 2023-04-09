@@ -1,2 +1,2 @@
 # FE8U_256ColCG
- Functionality for supporting 256-coluur mode BGs n FE8U.
+ Functionality for supporting 256-colour mode BGs n FE8U.
