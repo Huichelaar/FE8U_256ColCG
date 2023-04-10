@@ -31,13 +31,16 @@ LOAD1 0 PlayerUnits
 ENUN
 LOAD1 0 NPCUnits
 ENUN
-
-SetBackground256(2)
+SetBackground256(0x38)
 CGTEXTSTART
 TEXTSHOW CGTest
 TEXTEND
 REMA
-FADI 60
+FADI 8
+CLEAN
+SetBackground(0x2)
+STAL 10
+FADI 8
 ENDA
 
 LocationBasedEvents:

@@ -23,10 +23,15 @@ if im.height != 160:
 
 # Transform into 8bpp binary and compress.
 arr = [0 for i in range(im.width*im.height)]
-for y in range(im.height):
-  vOffs = y*im.width
-  for x in range(im.width):
-    arr[vOffs+x] = im.getpixel((x, y))
+i = 0
+for ytile in range(im.height>>3):
+  vOffs = ytile*8
+  for xtile in range(im.width>>3):
+    hOffs = xtile*8
+    for y in range(8):
+      for x in range(8):
+        arr[i] = im.getpixel((x+hOffs, y+vOffs))
+        i += 1
 arr2 = lzss.compress(arr)
 
 # Write gfx to file.

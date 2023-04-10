@@ -1,5 +1,11 @@
+#include "BG/BG.event"
+
 ALIGN 4; CGC_BubbleSpriteGfx:
 #incbin "BubbleSprite.dmp"
+
+ALIGN 4; CGC_TextSpriteOAM:
+SHORT 0x1
+SHORT 0x4400 0x8000 0x0000
 
 ALIGN 4; CGC_BubbleSpriteOAM:
 SHORT 0xD
