@@ -13,6 +13,7 @@
 **/*.ss8
 **/*.ss9
 **/*.o
+**/*.ico
 
 # Directories
 **/*.TextEntries
