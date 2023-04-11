@@ -14,8 +14,6 @@
 // Parameters, change these to fit your project.
 
 // Includes
-#include "text/AntiHuffman.event"         // Remove if you are already including essential fixes.
-#include "text/Install Text Data.event"   // Remove this if you already have a text buildfile.
 #include "src/src.event"
 #include "gfx/gfx.event"
 #include "events/events.event"

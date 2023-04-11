@@ -1,7 +1,8 @@
 // Adapted from 0x9EE2E8 and EA Convo Helpers.
-#define SetBackground256(background) "SVAL 2 background; CALL CGC_background256"
+#define SetBackground256(background) "SVAL 1 256; SVAL 2 background; CALL CGC_background"
+#define SetBackground224(background) "SVAL 1 224; SVAL 2 background; CALL CGC_background"
 
-CGC_background256:
+CGC_background:
 CHECK_EVBIT 0x8         //EVBIT 0x8 = fade in?
 BNE 0x80D2 0xC 0x0
 FADI 16
