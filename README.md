@@ -4,7 +4,7 @@ Vanilla FE8U allows backgrounds/CGs to use one of a few 16-colour palettes for e
 ![Gif broken](https://i.imgur.com/T7o3aHD.gif)
 
 ## Implementation/Features
-For 256-colour CGs, all background colours are reserved for the CG. This means regular chatbubbles won't work, as these also need background palettes. Instead, the CGTextBox (started by using event code [CGTEXTSTART](https://github.com/StanHash/EAStandardLibrary/blob/experimental/Language%20Raws/FE8/Scene-Text.txt#L83)) is now built solely out of sprites, allowing this chatbox to still be used when a 256-colour CG is displayed.
+For 256-colour CGs, all background colours are reserved for the CG. This means regular chatbubbles won't work, as these also need background palettes. Loading portraits also breaks the CG. Instead, the CGTextBox (started by using event code [CGTEXTSTART](https://github.com/StanHash/EAStandardLibrary/blob/experimental/Language%20Raws/FE8/Scene-Text.txt#L83)) is now built solely out of sprites, allowing this chatbox to still be used when a 256-colour CG is displayed.
 
 I'll be using "CG", "BG" and "background" interchangeably from here on. 256-colour BGs are added to the usual conversation background table. Their TSA pointer is set to NULL. I had to [repoint the background table](gfx/BG/BG.event), so if you plan on adding the patch to your buildfile project or [Custom Build](https://dw.ngmansion.xyz/doku.php?id=en:en:guide:febuildergba:skillsystems_custombuild), make sure it's not being repointed multiple times.
 
