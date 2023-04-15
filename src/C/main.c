@@ -2,7 +2,7 @@
 #include "main.h"
 
 // Set 256-col or 224-col BG.
-void CGC_ASMC() {
+void CGC_LoadMultiPalBG(struct BGData* bgData, u32 colCount) {
   // Init LCDIO stuff.
   SetBgPosition(0, 0, 0);
   SetBgPosition(1, 0, 0);
@@ -24,17 +24,17 @@ void CGC_ASMC() {
   CpuFastFill(0, (void*)0x6000000, 0x20);       // Empty tile.
   
   // Init gfx.
-  Decompress(bgTable[gEventSlot[2]].gfx, (void*)0x6004000);
+  Decompress(bgData->gfx, (void*)0x6004000);
   for (int i = 0; i < 640; i++)
     gBg3MapBuffer[i] = i+256;
   
   // Leave paletteslot 2 and 3 empty for text and chatbubble if 224-col BG.
-  if (gEventSlot[1] == 224) {
-    CopyToPaletteBuffer(bgTable[gEventSlot[2]].pal, 0, 0x40);
-    CopyToPaletteBuffer(bgTable[gEventSlot[2]].pal+0x20, 0x80, 0x180);
+  if (colCount == 224) {
+    CopyToPaletteBuffer(bgData->pal, 0, 0x40);
+    CopyToPaletteBuffer(bgData->pal+0x20, 0x80, 0x180);
   }
   else
-    CopyToPaletteBuffer(bgTable[gEventSlot[2]].pal, 0, 0x200);
+    CopyToPaletteBuffer(bgData->pal, 0, 0x200);
   
   EnableBgSyncByMask(0xF);
   EnablePaletteSync();
