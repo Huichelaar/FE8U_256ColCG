@@ -2,13 +2,13 @@
 #define MAIN_H
 #include "gbafe.h"
 
-void CGC_ASMC();
-
+// Vanilla struct.
 struct BGData {
   const void* gfx;
   const void* tsa;
   const u16* pal;
 };
-const extern struct BGData bgTable[];
+
+void CGC_LoadMultiPalBG(struct BGData* bgData, u32 colCount);
 
 #endif // MAIN_H

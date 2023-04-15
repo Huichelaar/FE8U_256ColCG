@@ -4,19 +4,19 @@ Vanilla FE8U allows backgrounds/CGs to use one of a few 16-colour palettes for e
 ![Gif broken](https://i.imgur.com/LPLVsik.gif)
 
 ## Building
-Apply [CGCol.event](CGCol.event) to a clean FE8U ROM using [Everything Assembler, AKA EA](https://feuniverse.us/t/event-assembler/1749) or run [MAKE HACK](MAKE HACK.cmd). Chapter 2's (The Protected) events have been replaced by example events.
+Apply [CGCol.event](CGCol.event) to a clean FE8U ROM using [Everything Assembler, AKA EA](https://feuniverse.us/t/event-assembler/1749) or run [MAKE HACK](MAKE HACK.cmd). Chapter 0's (Prologue: The Fall of Renais) events have been replaced by example events.
 
 ## Adapting to an existing project
 If you're making a bigger ROMHack or project involving multiple patches and you're using [FEBuilderGBA](https://github.com/FEBuilderGBA/FEBuilderGBA/releases/) as your main tool, you might be familiar with [Custom Build](https://dw.ngmansion.xyz/doku.php?id=en:en:guide:febuildergba:skillsystems_custombuild). Whilst it's generally not recommended to mix buildfile patches and FEBuilderGBA, if the patch you're interested in using is not available in FEBuilderGBA, Custom Build is one way to still adapt the patch.
 
-If you're using Custom Build or buildfiles as your tool/editor/w/e, keep in mind that this patch by default repoints the background table and sets new events for Chapter 2 (The Protected). You will probably want to reorganize these.
+If you're using Custom Build or buildfiles as your tool/editor/w/e, keep in mind that this patch by default repoints the background table and sets new events for Chapter 0 (Prologue: The Fall of Renais). You will probably want to reorganize these.
 
 ## Implementation/Features
 For 256-colour BGs, all background colours are reserved for the BG. This means regular chatbubbles won't work, as these also need background palettes. Loading portraits also breaks the BG. Instead, the CGTextBox (started by using event code [CGTEXTSTART](https://github.com/StanHash/EAStandardLibrary/blob/experimental/Language%20Raws/FE8/Scene-Text.txt#L83)) is now built solely out of sprites, allowing this chatbox to still be used when a 256-colour CG is displayed.
 
-For 224-colour BGs, All but two background palettes have been reserved for the BG. The other two palettes are reserved for text and chatbubble. This allows displaying portraits and chatbubbles at the cost of fewer colours for the BG. I'll use umbrella term "Multipalette BGs" to refer to both 224-colour BGs and 256-colour BGs.
+For 224-colour BGs, All but two background palettes have been reserved for the BG. The other two palettes are reserved for text and chatbubble. This allows displaying portraits and chatbubbles at the cost of fewer colours for the BG. I'll use the umbrella term "Multipalette BGs" to refer to both 224-colour BGs and 256-colour BGs.
 
-Multipalette BGs are added to the usual conversation background table. 256-colour BGs have their TSA pointer set to 0, whereas 224-colour BGs have theirs set to 1. This is merely a visual aid, these values aren't (supposed to be) read by anything in-game. I had to [repoint the background table](gfx/BG/BG.event), so if you plan on adding the patch to your buildfile project or [Custom Build](https://dw.ngmansion.xyz/doku.php?id=en:en:guide:febuildergba:skillsystems_custombuild), make sure it's not being repointed multiple times.
+Multipalette BGs are added to the usual conversation background table. 256-colour BGs have their TSA pointer set to 0, whereas 224-colour BGs have theirs set to 1. This is how the patch recognizes how to load the backgrounds, so make sure to keep this consistent for your BGs when you add them. I had to [repoint the background table](gfx/BG/BG.event), so if you plan on adding the patch to your buildfile project or [Custom Build](https://dw.ngmansion.xyz/doku.php?id=en:en:guide:febuildergba:skillsystems_custombuild), make sure it's not being repointed multiple times.
 
 Adding your own Multipalette BGs means having to convert .png images to binary .dmp files. I made a program, [Sommie.exe](gfx/BG/Sommie.exe), to make this process simple. Here's how to add your own BGs:
 - Make sure your image is in .png format and 256 pixels wide & 160 pixels tall. Keep in mind that the displayed image will be 240x160, meaning the last 16 columns of pixels won't display.
@@ -28,12 +28,10 @@ Adding your own Multipalette BGs means having to convert .png images to binary .
   - `<dmpfilename>` is the filename of the output compressed image.
   - `<palfilename>` is the filename of the output palette.
   
-  Easiest would be to open the batch-file [SommieAll.bat](gfx/BG/SommieAll.bat), which simply runs [Sommie.exe](gfx/BG/Sommie.exe) for all .png files in the directory. [SommieAll.bat](gfx/BG/SommieAll.bat) expects the first three characters of each `.png` file's name to be either 224 or 256, which it'll use as input for `<colCount>`.
-- `#include` the .dmp and the Pal.dmp files at the bottom of [BG.event](gfx/BG/BG.event) and add an entry to the background table.
+  Easiest would be to open the batch-file [SommieAll.bat](gfx/BG/SommieAll.bat), which simply runs [Sommie.exe](gfx/BG/Sommie.exe) for all .png files in the directory. [SommieAll.bat](gfx/BG/SommieAll.bat) expects the first three characters of each `.png` file's name to be either `224` or `256`, which it'll use as input for `<colCount>`.
+- `#include` the .dmp and the Pal.dmp files at the bottom of [BG.event](gfx/BG/BG.event) and add an entry to the background table. Make sure to set the TSA pointer to 0 or 1 for 256 or 224 colour BGs respectively.
 
-There's two example images of [a certain guardian spirit](gfx/BG/256Sommie.png) which have been inserted already for reference. [One](gfx/BG/256Sommie.png) is a 256-colour BG, [the other](gfx/BG/224Sommie.png) a 224-colour BG.
-
-There's two new macros, [`SetBackground256(background)`](events/background.event) and [`SetBackground224(background)`](events/background.event), which can be used to start either a 256-colour or 224-colour BG. Both macros are used in [example events](events/2.event) replacing FE8 Chapter 2's events. Feel free to remove the example events once you're familiar with everything/ready to add the patch to your project.
+There's two example images of [a certain guardian spirit](gfx/BG/256Sommie.png) which have been inserted already for reference. [One](gfx/BG/256Sommie.png) is a 256-colour BG, [the other](gfx/BG/224Sommie.png) a 224-colour BG. These can be seen in action in Chapter 0 (Prologue: The Fall of Renais). Feel free to remove the [example events](events/0.event) once you're familiar with everything/ready to add the patch to your project.
 
 ## Credits
 

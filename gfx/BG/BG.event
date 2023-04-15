@@ -73,8 +73,8 @@ WORD 0x08958A58 0x0895D1A8 0x0895D65C
 WORD 0x0895D75C 0x0895D768 0x0895DC1C
 WORD 0x0 0x0 0x0                                    // Not sure what this is used for.
 WORD 0x0 0x0 0x0                                    // ID used for random BG.
-POIN Sommie256BG; WORD 0x0; POIN Sommie256Pal       // I'll use TSA == 0 for 256-colour BGs
-POIN Sommie224BG; WORD 0x1; POIN Sommie224Pal       // and TSA == 1 for 224 colour BGs. (merely visual aid).
+POIN Sommie256BG; WORD 0x0; POIN Sommie256Pal       // TSA == 0 indicates 256-colour BGs.
+POIN Sommie224BG; WORD 0x1; POIN Sommie224Pal       // TSA == 1 indicates 224-colour BGs.
 
 ALIGN 4; Sommie256BG:
 #incbin "256Sommie.dmp"

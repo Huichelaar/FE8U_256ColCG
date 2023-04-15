@@ -1,6 +1,6 @@
 {
-EventPointerTable(13,MyEvents)
-PUSH; ORG 0x8B0A44; BYTE 0x0; POP       // Seize objective.
+EventPointerTable(7,MyEvents)
+PUSH; ORG 0x8B091C; BYTE 0x0; POP       // Seize objective.
 
 MyEvents:
 POIN TurnBasedEvents
@@ -21,24 +21,17 @@ PlayerUnits: PlayerUnitsHard:
 UNIT Eirika EirikaLord Eirika Level(1,Ally,0) [0,0] 0 0 0 0 [Rapier, Elixir] NoAI
 UNIT
 
-NPCUnits:
-UNIT Garcia Fighter Eirika Level(1,Ally,0) [5,3] 0 0 0 0 [Vulnerary] NoAI
-UNIT LArachel Troubadour Eirika Level(1,Ally,0) [6,4] 0 0 0 0 [Vulnerary] NoAI
-UNIT
-
 BeginningScene:
 LOAD1 0 PlayerUnits
 ENUN
-LOAD1 0 NPCUnits
-ENUN
 MUSCSLOW 0x2C
-SetBackground256(0x38)
+SetBackground(0x38)
 CGTEXTSTART
 TEXTSHOW 0xC22
 TEXTEND
 REMA
 FADI 8
-SetBackground224(0x39)
+SetBackground(0x39)
 TEXTSTART
 TEXTSHOW 0x98B
 TEXTEND

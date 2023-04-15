@@ -11,22 +11,24 @@
 	.file	"main.c"
 	.text
 	.align	1
-	.global	CGC_ASMC
+	.global	CGC_LoadMultiPalBG
 	.arch armv4t
 	.syntax unified
 	.code	16
 	.thumb_func
 	.fpu softvfp
-	.type	CGC_ASMC, %function
-CGC_ASMC:
+	.type	CGC_LoadMultiPalBG, %function
+CGC_LoadMultiPalBG:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r0, r1, r2, r4, r5, r6, r7, lr}
 	movs	r2, #0
-	ldr	r4, .L7
-	movs	r1, r2
+	push	{r0, r1, r4, r5, r6, lr}
+	ldr	r6, .L7
+	movs	r4, r0
+	movs	r5, r1
 	movs	r0, r2
+	movs	r1, r2
 	bl	.L9
 	movs	r2, #0
 	movs	r0, #1
@@ -41,7 +43,7 @@ CGC_ASMC:
 	movs	r1, r2
 	bl	.L9
 	movs	r1, #224
-	ldr	r4, .L7+4
+	ldr	r6, .L7+4
 	movs	r0, #0
 	lsls	r1, r1, #8
 	bl	.L9
@@ -58,7 +60,7 @@ CGC_ASMC:
 	lsls	r1, r1, #8
 	bl	.L9
 	movs	r1, #0
-	ldr	r4, .L7+8
+	ldr	r6, .L7+8
 	movs	r0, r1
 	bl	.L9
 	movs	r1, #0
@@ -82,32 +84,27 @@ CGC_ASMC:
 	bics	r2, r1
 	strb	r2, [r3, #1]
 	mov	r3, sp
-	movs	r4, #0
+	movs	r6, #0
 	adds	r0, r3, #2
 	ldr	r2, .L7+16
 	ldr	r1, .L7+20
 	ldr	r3, .L7+24
-	strh	r4, [r0]
+	strh	r6, [r0]
 	bl	.L10
 	movs	r1, #192
 	ldr	r2, .L7+28
 	ldr	r3, .L7+32
 	lsls	r1, r1, #19
 	add	r0, sp, #4
-	str	r4, [sp, #4]
+	str	r6, [sp, #4]
 	bl	.L10
-	movs	r3, #12
-	ldr	r5, .L7+36
-	ldr	r2, [r5, #8]
-	muls	r2, r3
-	ldr	r4, .L7+40
-	ldr	r1, .L7+44
-	ldr	r0, [r2, r4]
-	ldr	r3, .L7+48
+	ldr	r1, .L7+36
+	ldr	r3, .L7+40
+	ldr	r0, [r4]
 	bl	.L10
 	movs	r3, #128
 	movs	r1, #224
-	ldr	r2, .L7+52
+	ldr	r2, .L7+44
 	lsls	r3, r3, #1
 	lsls	r1, r1, #2
 .L2:
@@ -118,35 +115,27 @@ CGC_ASMC:
 	adds	r2, r2, #2
 	cmp	r3, r1
 	bne	.L2
-	movs	r7, #12
-	ldr	r3, [r5, #8]
-	muls	r3, r7
-	adds	r3, r4, r3
-	ldr	r0, [r3, #8]
-	ldr	r3, [r5, #4]
-	ldr	r6, .L7+56
-	cmp	r3, #224
+	ldr	r0, [r4, #8]
+	ldr	r6, .L7+48
+	cmp	r5, #224
 	bne	.L3
 	movs	r2, #64
 	movs	r1, #0
-	bl	.L11
+	bl	.L9
 	movs	r2, #192
 	movs	r1, #128
-	ldr	r3, [r5, #8]
-	muls	r7, r3
-	adds	r4, r4, r7
 	ldr	r0, [r4, #8]
 	lsls	r2, r2, #1
 	adds	r0, r0, #64
 .L6:
-	bl	.L11
+	bl	.L9
 	@ sp needed
 	movs	r0, #15
-	ldr	r3, .L7+60
+	ldr	r3, .L7+52
 	bl	.L10
-	ldr	r3, .L7+64
+	ldr	r3, .L7+56
 	bl	.L10
-	pop	{r0, r1, r2, r4, r5, r6, r7}
+	pop	{r0, r1, r4, r5, r6}
 	pop	{r0}
 	bx	r0
 .L3:
@@ -166,21 +155,17 @@ CGC_ASMC:
 	.word	CpuSet
 	.word	16777224
 	.word	CpuFastSet
-	.word	gEventSlot
-	.word	bgTable
 	.word	100679680
 	.word	Decompress
 	.word	gBg3MapBuffer
 	.word	CopyToPaletteBuffer
 	.word	EnableBgSyncByMask
 	.word	EnablePaletteSync
-	.size	CGC_ASMC, .-CGC_ASMC
+	.size	CGC_LoadMultiPalBG, .-CGC_LoadMultiPalBG
 	.ident	"GCC: (devkitARM release 55) 10.2.0"
 	.code 16
 	.align	1
 .L10:
 	bx	r3
 .L9:
-	bx	r4
-.L11:
 	bx	r6

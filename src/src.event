@@ -24,8 +24,14 @@ PUSH
   // Don't load text/dialogue palettes into BGPAL.
   ORG 0xE2DA
     SHORT 0x46C0 0x46C0
+  
+  // Call CGC_LoadMultiPalBG if 256 or 224 col BG.
+  ORG 0xE844
+    jumpToHack(CGC_loadBGGfx)
 
 POP
 
 ALIGN 4; CGC_loadBubbleGfx:
 #include "loadBubbleGfx.lyn.event"
+ALIGN 4; CGC_loadBGGfx:
+#include "loadBGGfx.lyn.event"
