@@ -36,3 +36,4 @@ There's two example images of [a certain guardian spirit](gfx/BG/256Sommie.png) 
 ## Credits
 
 circleseverywhere for [lzss.py](https://www.dropbox.com/sh/xe3bk2tn87zboif/AACTeniihbt-NQWrTpn6F5OSa?dl=0&preview=lzss.py)
+7743 for finding bugs and suggesting improvements.
